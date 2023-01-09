@@ -2,22 +2,28 @@ package spring.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import ListInterface.CustomerInterface;
 import spring.RequestMessage.SuccessMessage;
 import spring.entity.Customer;
 import spring.repository.CustomerRepository;
+import spring.repository.DetailRepository;
 
 @Component
+@Service
 public class Cstmservice {
 
 	@Autowired
 	private CustomerRepository customerRepository;
+
+	@Autowired
+	private DetailRepository detailRepository;
 
 	List<Customer> list = new ArrayList<>();
 
@@ -35,8 +41,17 @@ public class Cstmservice {
 //
 //	}
 
-	public Optional<Customer> findById(int id) {
-		return customerRepository.findById(id);
+	public List<CustomerInterface> getbyid(int id) throws Exception {
+
+		List<CustomerInterface> customer = this.customerRepository.findById(id, CustomerInterface.class);
+
+		return customer;
+	}
+
+	public List<CustomerInterface> getall() {
+		List<CustomerInterface> list = this.customerRepository.findAll(CustomerInterface.class);
+
+		return list;
 	}
 
 }
