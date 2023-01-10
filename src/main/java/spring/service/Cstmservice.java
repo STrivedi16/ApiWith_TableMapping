@@ -41,17 +41,37 @@ public class Cstmservice {
 //
 //	}
 
-	public List<CustomerInterface> getbyid(int id) throws Exception {
-
-		List<CustomerInterface> customer = this.customerRepository.findById(id, CustomerInterface.class);
-
-		return customer;
-	}
+//	public List<CustomerInterface> getbyid(int id) throws Exception {
+//
+//		List<CustomerInterface> customer = this.customerRepository.findById(id, CustomerInterface.class);
+//
+//		return customer;
+//	}
 
 	public List<CustomerInterface> getall() {
 		List<CustomerInterface> list = this.customerRepository.findAll(CustomerInterface.class);
 
 		return list;
+	}
+
+	public Customer update(Customer customer) {
+		Customer list = this.customerRepository.save(customer);
+
+		return list;
+	}
+
+	public String delete(int customer) {
+		this.customerRepository.deleteById(customer);
+
+		return "Your data has been Deleted";
+
+	}
+
+	public List<CustomerInterface> getbyid(int id) throws Exception {
+
+		List<CustomerInterface> customer = this.customerRepository.findById(id, CustomerInterface.class);
+
+		return customer;
 	}
 
 }

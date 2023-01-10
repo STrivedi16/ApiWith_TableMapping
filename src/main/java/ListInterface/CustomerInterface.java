@@ -1,12 +1,14 @@
 package ListInterface;
 
 public interface CustomerInterface {
-	// public int getid();
+	public int getId();
 
 	public String getName();
 
+	public String getCity();
+
 	public long getNumber();
 
-	public String getAddress();
+	public Detailinterface getAddress();
 
 }

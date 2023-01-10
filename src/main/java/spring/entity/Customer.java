@@ -7,11 +7,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 @Entity
 @Table(name = "customerEntity")
+@SQLDelete(sql = "UPDATE customer_entity set is_active=false WHERE id=?")
+@Where(clause = "is_active=true")
 public class Customer {
 
 	@Id
@@ -27,8 +33,8 @@ public class Customer {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Detail address;
 
-//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
-//	private List<Product> item;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+	private List<Product> item;
 
 	public Customer(int id, String name, String city, long number, Detail address, List<Product> item,
 			Boolean is_active) {
@@ -38,17 +44,17 @@ public class Customer {
 		this.city = city;
 		this.number = number;
 		this.address = address;
-		// this.item = item;
+		this.item = item;
 		this.is_active = is_active;
 	}
 
-//	public List<Product> getItem() {
-//		return item;
-//	}
-//
-//	public void setItem(List<Product> item) {
-//		this.item = item;
-//	}
+	public List<Product> getItem() {
+		return item;
+	}
+
+	public void setItem(List<Product> item) {
+		this.item = item;
+	}
 
 	private Boolean is_active = true;
 

@@ -2,16 +2,18 @@ package spring.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 @Entity
+@SQLDelete(sql = "UPDATE detail set active=false where did=?")
+@Where(clause = "active=true")
 public class Detail {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int did;
 
 	private String address;
@@ -21,7 +23,7 @@ public class Detail {
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "address")
 	private Customer customer;
 
-	private boolean active = true;;
+	private boolean active = true;
 
 	public int getDid() {
 		return did;
