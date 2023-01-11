@@ -1,5 +1,7 @@
 package spring.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,14 @@ public class prodtservice {
 		return new ResponseEntity<>(
 				new SuccessMessage("Stored Successfull", "Successfull", productRepository.save(product)),
 				HttpStatus.OK);
+	}
+
+	public List<Product> getallproduct() {
+
+		List<Product> list = this.productRepository.findAll();
+
+		return list;
+
 	}
 
 }

@@ -33,10 +33,10 @@ public class Customer {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Detail address;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
-	private List<Product> item;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customer_id")
+	private List<customer_entity_item> item;
 
-	public Customer(int id, String name, String city, long number, Detail address, List<Product> item,
+	public Customer(int id, String name, String city, long number, Detail address, List<customer_entity_item> item,
 			Boolean is_active) {
 		super();
 		this.id = id;
@@ -48,11 +48,11 @@ public class Customer {
 		this.is_active = is_active;
 	}
 
-	public List<Product> getItem() {
+	public List<customer_entity_item> getItem() {
 		return item;
 	}
 
-	public void setItem(List<Product> item) {
+	public void setItem(List<customer_entity_item> item) {
 		this.item = item;
 	}
 

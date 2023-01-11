@@ -74,4 +74,16 @@ public class Cstmservice {
 		return customer;
 	}
 
+	public Customer Product(Customer customer) {
+		Customer customer2 = this.customerRepository.save(customer);
+
+		return customer2;
+	}
+
+	public Customer setprodctCustomer(Customer customer) {
+		Customer customer2 = this.customerRepository.save(customer);
+
+		return customer2;
+	}
+
 }

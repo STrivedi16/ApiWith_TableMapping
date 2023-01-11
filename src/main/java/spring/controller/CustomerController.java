@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ListInterface.CustomerInterface;
@@ -20,18 +21,19 @@ import spring.entity.Customer;
 import spring.service.Cstmservice;
 import spring.service.NotFoundException;
 
+@RequestMapping(value = "api")
 @RestController
 public class CustomerController {
 
 	@Autowired
 	private Cstmservice cstmservice;
 
-	@PostMapping("api/customer")
+	@PostMapping("/customer")
 	public ResponseEntity<?> addcustomer(@RequestBody Customer customer) {
 		return this.cstmservice.setdata(customer);
 	}
 
-//	@GetMapping("api/customers")
+//	@GetMapping("/customers")
 //	public ResponseEntity<?> getcustomer() {
 //		return this.cstmservice.getdata();
 //	}
@@ -63,7 +65,7 @@ public class CustomerController {
 
 	}
 
-	@PutMapping("api/customer/{id}")
+	@PutMapping("/customer/{id}")
 	public ResponseEntity<?> update(@RequestBody Customer customer, @PathVariable("id") int id)
 			throws NotFoundException {
 		Customer cstm = this.cstmservice.update(customer);
@@ -103,6 +105,36 @@ public class CustomerController {
 			return new ResponseEntity<>(new ErrorMessage(e.getMessage(), "Not found"), HttpStatus.BAD_REQUEST);
 		}
 
+	}
+
+	@PostMapping("api/item/{id}")
+	public ResponseEntity<?> ProductStore(@RequestBody Customer customer, @PathVariable("id") int id) {
+		Customer customer2 = this.cstmservice.Product(customer);
+		try {
+			if (customer.getId() == id) {
+				return new ResponseEntity<>(new SuccessMessage("SuccessFull ", "Successfull", customer2),
+						HttpStatus.OK);
+			}
+			throw new NotFoundException("Data Not Found");
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(new ErrorMessage(e.getMessage(), "Not GET"), HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@PutMapping("/buy/{id}")
+	public ResponseEntity<?> setproductCustomer(@RequestBody Customer customer, @PathVariable("id") int id) {
+		Customer customer2 = this.cstmservice.setprodctCustomer(customer);
+		try {
+			if (customer.getId() == id) {
+				return new ResponseEntity<>(new SuccessMessage("SuccessFull ", "Successfull", customer2),
+						HttpStatus.OK);
+			}
+			throw new NotFoundException("Data Not Found");
+
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(new ErrorMessage(e.getMessage(), "Not GET"), HttpStatus.NOT_FOUND);
+
+		}
 	}
 
 }

@@ -14,7 +14,8 @@ import org.hibernate.annotations.Where;
 public class Detail {
 
 	@Id
-	private int did;
+
+	private int addressid;
 
 	private String address;
 
@@ -25,28 +26,12 @@ public class Detail {
 
 	private boolean active = true;
 
-	public int getDid() {
-		return did;
+	public int getAddressid() {
+		return addressid;
 	}
 
-	public void setDid(int did) {
-		this.did = did;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
+	public void setAddressid(int addressid) {
+		this.addressid = addressid;
 	}
 
 	public String getAddress() {
@@ -65,25 +50,34 @@ public class Detail {
 		this.pincode = pincode;
 	}
 
-	public Detail(String address, int pincode) {
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public Detail(int addressid, String address, int pincode, Customer customer, boolean active) {
 		super();
+		this.addressid = addressid;
 		this.address = address;
 		this.pincode = pincode;
+		this.customer = customer;
+		this.active = active;
 	}
 
 	public Detail() {
 		super();
 		// TODO Auto-generated constructor stub
-
-	}
-
-	public Detail(int did, String address, int pincode, Customer customer, boolean active) {
-		super();
-		this.did = did;
-		this.address = address;
-		this.pincode = pincode;
-		this.customer = customer;
-		this.active = active;
 	}
 
 }

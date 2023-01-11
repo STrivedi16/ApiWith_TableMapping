@@ -1,15 +1,19 @@
 package spring.entity;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Product {
 
 	@Id
-	// @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int productid;
 
 	private String item;
@@ -21,15 +25,34 @@ public class Product {
 //		return customer.getId();
 //	}
 
-	@ManyToOne(cascade = CascadeType.MERGE)
-	private Customer customer;
+//	@ManyToOne(cascade = CascadeType.ALL)
+//	private Customer customer;
 
-	public Product(int productid, String item, Boolean active, Customer customer) {
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "item_productid")
+	private List<customer_entity_item> productentity;
+
+	public Product(int productid, String item, Boolean active, List<customer_entity_item> productentity) {
 		super();
 		this.productid = productid;
 		this.item = item;
 		this.active = active;
-		this.customer = customer;
+		this.productentity = productentity;
+	}
+
+	public List<customer_entity_item> getProductentity() {
+		return productentity;
+	}
+
+	public void setProductentity(List<customer_entity_item> productentity) {
+		this.productentity = productentity;
+	}
+
+	public Product(int productid, String item, Boolean active) { // Customer customer) {
+		super();
+		this.productid = productid;
+		this.item = item;
+		this.active = active;
+//		this.customer = customer;
 	}
 
 	public Boolean getActive() {
@@ -56,13 +79,13 @@ public class Product {
 		this.item = item;
 	}
 
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
+//	public Customer getCustomer() {
+//		return customer;
+//	}
+//
+//	public void setCustomer(Customer customer) {
+//		this.customer = customer;
+//	}
 
 	public Product() {
 		super();

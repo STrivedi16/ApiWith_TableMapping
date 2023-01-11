@@ -8,4 +8,5 @@ import spring.entity.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
+	// List<ProductInterface> findAllitem(Class<ProductInterface> class1);
 }

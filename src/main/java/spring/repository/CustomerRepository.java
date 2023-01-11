@@ -14,7 +14,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
 	List<CustomerInterface> findById(int id, Class<CustomerInterface> class1);
 
-	@Query(value = "select ce.name, ce.city,ce.number ,de.address from customer_entity as ce inner join detail as de on de.did = ce.address_did", nativeQuery = true)
+	@Query(value = "select ce.name , ce.number , de.address , ce.city, de.pincode from customer_entity as ce inner join detail as de on ce.address_addressid=de.addressid ", nativeQuery = true)
 	List<CustomerInterface> findAll(Class<CustomerInterface> class1);
 
 }
