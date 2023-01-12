@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "customerEntity")
@@ -31,12 +34,14 @@ public class Customer {
 	private long number;
 
 	@OneToOne(cascade = CascadeType.ALL)
+
 	private Detail address;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customer_id")
-	private List<customer_entity_item> item;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customer_id", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<CustumerProductEntity> item;
 
-	public Customer(int id, String name, String city, long number, Detail address, List<customer_entity_item> item,
+	public Customer(int id, String name, String city, long number, Detail address, List<CustumerProductEntity> item,
 			Boolean is_active) {
 		super();
 		this.id = id;
@@ -48,11 +53,11 @@ public class Customer {
 		this.is_active = is_active;
 	}
 
-	public List<customer_entity_item> getItem() {
+	public List<CustumerProductEntity> getItem() {
 		return item;
 	}
 
-	public void setItem(List<customer_entity_item> item) {
+	public void setItem(List<CustumerProductEntity> item) {
 		this.item = item;
 	}
 
@@ -111,17 +116,6 @@ public class Customer {
 	}
 
 	public void setIs_active(Boolean is_active) {
-		this.is_active = is_active;
-	}
-
-	public Customer(int id, String name, String city, long number, Detail address, Product item, Boolean is_active) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.city = city;
-		this.number = number;
-		this.address = address;
-		// this.item = item;
 		this.is_active = is_active;
 	}
 

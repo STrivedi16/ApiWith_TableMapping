@@ -4,10 +4,13 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Product {
@@ -28,10 +31,11 @@ public class Product {
 //	@ManyToOne(cascade = CascadeType.ALL)
 //	private Customer customer;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "item_productid")
-	private List<customer_entity_item> productentity;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "item_productid", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<CustumerProductEntity> productentity;
 
-	public Product(int productid, String item, Boolean active, List<customer_entity_item> productentity) {
+	public Product(int productid, String item, Boolean active, List<CustumerProductEntity> productentity) {
 		super();
 		this.productid = productid;
 		this.item = item;
@@ -39,11 +43,11 @@ public class Product {
 		this.productentity = productentity;
 	}
 
-	public List<customer_entity_item> getProductentity() {
+	public List<CustumerProductEntity> getProductentity() {
 		return productentity;
 	}
 
-	public void setProductentity(List<customer_entity_item> productentity) {
+	public void setProductentity(List<CustumerProductEntity> productentity) {
 		this.productentity = productentity;
 	}
 

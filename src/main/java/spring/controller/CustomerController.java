@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ListInterface.BuyInterface;
 import ListInterface.CustomerInterface;
 import spring.RequestMessage.ErrorMessage;
 import spring.RequestMessage.SuccessMessage;
@@ -50,7 +51,7 @@ public class CustomerController {
 	 * }
 	 */
 
-	@GetMapping("all")
+	@GetMapping("/all")
 	public ResponseEntity<?> getall() {
 		List<CustomerInterface> list = this.cstmservice.getall();
 
@@ -80,7 +81,7 @@ public class CustomerController {
 		}
 	}
 
-	@DeleteMapping("api/customers/{id}")
+	@DeleteMapping("/customers/{id}")
 	public ResponseEntity<?> delete(@PathVariable() int id) {
 		String string = this.cstmservice.delete(id);
 
@@ -93,7 +94,7 @@ public class CustomerController {
 		}
 	}
 
-	@GetMapping("api/{id}")
+	@GetMapping("/Findby/{id}")
 	public ResponseEntity<?> getByid(@PathVariable("id") int id) {
 
 		try {
@@ -107,7 +108,7 @@ public class CustomerController {
 
 	}
 
-	@PostMapping("api/item/{id}")
+	@PostMapping("/item/{id}")
 	public ResponseEntity<?> ProductStore(@RequestBody Customer customer, @PathVariable("id") int id) {
 		Customer customer2 = this.cstmservice.Product(customer);
 		try {
@@ -135,6 +136,14 @@ public class CustomerController {
 			return new ResponseEntity<>(new ErrorMessage(e.getMessage(), "Not GET"), HttpStatus.NOT_FOUND);
 
 		}
+	}
+
+	@PutMapping("/getproduct")
+	public ResponseEntity<?> setcstmproduct(@RequestBody BuyInterface buy) {
+		BuyInterface customerbuy = this.cstmservice.cstmproduct(buy);
+
+		return new ResponseEntity<>(new SuccessMessage("Successfull", "Successfull", customerbuy), HttpStatus.OK);
+
 	}
 
 }

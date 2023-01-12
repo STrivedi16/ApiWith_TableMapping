@@ -1,11 +1,17 @@
 package spring.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ListInterface.CustomerProductInterface;
 import spring.entity.Customer;
-import spring.entity.customer_entity_item;
+import spring.entity.CustumerProductDto;
+import spring.entity.CustumerProductEntity;
+import spring.entity.Product;
 import spring.repository.CustomerRepository;
+import spring.repository.ProductRepository;
 import spring.repository.customer_entity_itemReposiory;
 
 @Service
@@ -17,17 +23,50 @@ public class customer_entity_itemService {
 	@Autowired
 	private CustomerRepository customerRepo;
 
-	public customer_entity_item addbuy(customer_entity_item itemService) throws NotFoundException {
+	@Autowired
+	private ProductRepository productRepository;
 
-		System.err.println("ASDFGHJ111");
+	public CustumerProductEntity addbuy(CustumerProductEntity itemService) throws NotFoundException {
+
 		Customer customer = customerRepo.findById(itemService.getId())
 				.orElseThrow(() -> new NotFoundException("not found"));
-		System.err.println("ASDFGHJ111222" + customer);
 
-		customer_entity_item customer2 = this.customerproduct.save(customer);
-		System.err.println("ASDFGHJ1112223333444" + customer2);
+		CustumerProductEntity customer2 = this.customerproduct.save(customer);
 
 		return customer2;
 
 	}
+
+	public CustumerProductEntity AddProduct(CustumerProductDto cstmproduct) throws NotFoundException {
+
+		Customer customer = customerRepo.findById(cstmproduct.getCusumerId())
+				.orElseThrow(() -> new NotFoundException("Custumer not found"));
+
+		Product product = productRepository.findByProductid(cstmproduct.getProductId());
+
+		CustumerProductEntity custumerProductEntity = new CustumerProductEntity();
+
+		custumerProductEntity.setCustomer_id(customer);
+		custumerProductEntity.setItem_productid(product);
+
+		this.customerproduct.save(custumerProductEntity);
+
+		return custumerProductEntity;
+	}
+
+	public List<CustumerProductEntity> getallrecords() {
+
+		List<CustumerProductEntity> list = this.customerproduct.findAll();
+
+		return list;
+
+	}
+
+	public List<CustomerProductInterface> getallbuyer() {
+		List<CustomerProductInterface> list1 = this.customerproduct.findAll(CustomerProductInterface.class);
+
+		return list1;
+
+	}
+
 }

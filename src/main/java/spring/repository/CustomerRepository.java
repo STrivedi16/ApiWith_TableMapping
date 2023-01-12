@@ -1,11 +1,13 @@
 package spring.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import ListInterface.BuyInterface;
 import ListInterface.CustomerInterface;
 import spring.entity.Customer;
 
@@ -16,5 +18,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
 	@Query(value = "select ce.name , ce.number , de.address , ce.city, de.pincode from customer_entity as ce inner join detail as de on ce.address_addressid=de.addressid ", nativeQuery = true)
 	List<CustomerInterface> findAll(Class<CustomerInterface> class1);
+
+	BuyInterface save(BuyInterface cstmprod);
+
+	Optional<Customer> findById(Customer customer_id);
 
 }

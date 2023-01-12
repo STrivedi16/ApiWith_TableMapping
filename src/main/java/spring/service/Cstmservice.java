@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import ListInterface.BuyInterface;
 import ListInterface.CustomerInterface;
 import spring.RequestMessage.SuccessMessage;
 import spring.entity.Customer;
@@ -84,6 +85,13 @@ public class Cstmservice {
 		Customer customer2 = this.customerRepository.save(customer);
 
 		return customer2;
+	}
+
+	public BuyInterface cstmproduct(BuyInterface cstmprod) {
+
+		BuyInterface buy = this.customerRepository.save(cstmprod);
+
+		return buy;
 	}
 
 }

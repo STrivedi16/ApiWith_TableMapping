@@ -22,6 +22,7 @@ public class Detail {
 	private int pincode;
 
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "address")
+
 	private Customer customer;
 
 	private boolean active = true;
