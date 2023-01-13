@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ListInterface.BuyInterface;
+import ListInterface.CustomerId;
 import ListInterface.CustomerInterface;
 import spring.RequestMessage.ErrorMessage;
 import spring.RequestMessage.SuccessMessage;
@@ -98,7 +99,7 @@ public class CustomerController {
 	public ResponseEntity<?> getByid(@PathVariable("id") int id) {
 
 		try {
-			List<CustomerInterface> customer = this.cstmservice.getbyid(id);
+			List<CustomerId> customer = this.cstmservice.getbyid(id);
 			System.err.println(customer);
 
 			return new ResponseEntity<>(new SuccessMessage("Custumer", "Successfull", customer), HttpStatus.OK);
@@ -138,11 +139,19 @@ public class CustomerController {
 		}
 	}
 
-	@PutMapping("/getproduct")
-	public ResponseEntity<?> setcstmproduct(@RequestBody BuyInterface buy) {
-		BuyInterface customerbuy = this.cstmservice.cstmproduct(buy);
+	@GetMapping("/inpagecstm")
+	public ResponseEntity<?> getcustomerinpage(
+			@RequestParam(value = "pagenumber", defaultValue = "1", required = false) Integer pagenumber,
+			@RequestParam(value = "pagesize", defaultValue = "5", required = false) Integer pagesize) {
+		try {
 
-		return new ResponseEntity<>(new SuccessMessage("Successfull", "Successfull", customerbuy), HttpStatus.OK);
+			List<CustomerInterface> list = this.cstmservice.getcustomerinpage(pagenumber, pagesize);
+
+			return new ResponseEntity<>(new SuccessMessage("Success", "Success", list), HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<>(new ErrorMessage("Error", "Error"), HttpStatus.NOT_FOUND);
+		}
 
 	}
 

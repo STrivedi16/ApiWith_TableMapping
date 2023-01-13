@@ -3,9 +3,12 @@ package spring.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import spring.RequestMessage.ErrorMessage;
 import spring.RequestMessage.SuccessMessage;
+import spring.RequestMessage.SuccessMessagePage;
 import spring.entity.Product;
 import spring.service.NotFoundException;
 import spring.service.prodtservice;
@@ -31,7 +35,7 @@ public class ProductController {
 		return this.prodtservice.addproduct(product);
 	}
 
-	@GetMapping("/allproduct")
+	@GetMapping("/products")
 	public ResponseEntity<?> getAllproduct() {
 		List<Product> list = this.prodtservice.getproduct();
 		try {
@@ -52,9 +56,10 @@ public class ProductController {
 			@RequestParam(name = "pagenumber", defaultValue = "1", required = false) Integer pagenumber,
 			@RequestParam(name = "pagesize", defaultValue = "5", required = false) Integer pagesize) {
 		try {
-			List<Product> list2 = this.prodtservice.getInpage(pagenumber, pagesize);
+			Page<Product> list2 = this.prodtservice.getInpage(pagenumber, pagesize);
 
-			return new ResponseEntity<>(new SuccessMessage("Successfully GET", "Successfull", list2), HttpStatus.OK);
+			return new ResponseEntity<>(new SuccessMessagePage("Successfully GET", "Successfull", list2.getContent(),
+					pagenumber, pagesize, list2.getTotalPages()), HttpStatus.OK);
 
 		} catch (Exception e) {
 
@@ -62,4 +67,38 @@ public class ProductController {
 		}
 
 	}
+
+	@GetMapping("/search")
+	public ResponseEntity<?> getserch(
+			@RequestParam(value = "Search", defaultValue = "-", required = false) String product) {
+		try {
+
+			String product1 = product;
+			boolean product3 = product1.equalsIgnoreCase(product);
+
+			System.out.println(product3);
+
+			Product product2 = this.prodtservice.getInsearch(product);
+
+			return new ResponseEntity<>(new SuccessMessage("Success", "Success", product2), HttpStatus.OK);
+
+		} catch (Exception e) {
+			return new ResponseEntity<>(new ErrorMessage("Error ", "Not Found"), HttpStatus.NOT_FOUND);
+		}
+
+	}
+
+	@DeleteMapping("/product/{id}")
+	public ResponseEntity<?> delete(@PathVariable("id") int id) {
+		try {
+			String product = this.prodtservice.deleteProduct(id);
+
+			return new ResponseEntity<>(new SuccessMessage("SuccessFull Discontinue", "Success", product),
+					HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<>(new ErrorMessage("Error ", "Not Found"), HttpStatus.NOT_FOUND);
+		}
+	}
+
 }

@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import ListInterface.BuyInterface;
+import ListInterface.CustomerId;
 import ListInterface.CustomerInterface;
 import spring.RequestMessage.SuccessMessage;
 import spring.entity.Customer;
@@ -68,9 +72,9 @@ public class Cstmservice {
 
 	}
 
-	public List<CustomerInterface> getbyid(int id) throws Exception {
+	public List<CustomerId> getbyid(int id) throws Exception {
 
-		List<CustomerInterface> customer = this.customerRepository.findById(id, CustomerInterface.class);
+		List<CustomerId> customer = this.customerRepository.findById(id, CustomerId.class);
 
 		return customer;
 	}
@@ -92,6 +96,16 @@ public class Cstmservice {
 		BuyInterface buy = this.customerRepository.save(cstmprod);
 
 		return buy;
+	}
+
+	public List<CustomerInterface> getcustomerinpage(Integer pagenumber, Integer pagesize) {
+		Pageable pageable = PageRequest.of(pagenumber, pagesize);
+
+		Page<CustomerInterface> page = this.customerRepository.findAll(pageable, CustomerInterface.class);
+
+		List<CustomerInterface> list = page.getContent();
+
+		return list;
 	}
 
 }

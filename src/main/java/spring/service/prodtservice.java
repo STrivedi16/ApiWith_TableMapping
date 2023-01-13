@@ -45,14 +45,35 @@ public class prodtservice {
 //
 //	}
 
-	public List<Product> getInpage(Integer pagenumber, Integer pagesize) {
+	public Page<Product> getInpage(Integer pagenumber, Integer pagesize) {
 		Pageable pageable = PageRequest.of(pagenumber, pagesize);
 
 		Page<Product> page = this.productRepository.findAll(pageable);
 
-		List<Product> list = page.getContent();
+		// List<Product> list = page.getContent();
 
-		return list;
+		return page;
+	}
+
+	public Product getInsearch(String product) {
+
+		if (product.isEmpty()) {
+			List<Product> list = this.productRepository.findAll();
+
+			return (Product) list;
+		}
+
+		Product product2 = this.productRepository.findByItem(product);
+
+		return product2;
+
+	}
+
+	public String deleteProduct(int id) {
+		this.productRepository.deleteById(id);
+
+		return "Product is Discontinue";
+
 	}
 
 }

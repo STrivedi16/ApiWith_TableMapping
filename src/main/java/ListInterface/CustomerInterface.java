@@ -1,7 +1,7 @@
 package ListInterface;
 
 public interface CustomerInterface {
-	public int getId();
+	// public int getId();
 
 	public String getName();
 
@@ -9,6 +9,7 @@ public interface CustomerInterface {
 
 	public long getNumber();
 
-	public Detailinterface getAddress();
+	// public Detailinterface getAddress();
 
+	public String getAddress();
 }

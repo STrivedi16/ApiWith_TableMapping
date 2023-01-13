@@ -10,9 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.SQLDelete;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@SQLDelete(sql = "UPDATE product set active=")
 public class Product {
 
 	@Id
