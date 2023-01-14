@@ -6,4 +6,8 @@ public interface ProductInterface {
 
 	public String getItem();
 
+	public int getPrice();
+
+	public String getCompany();
+
 }

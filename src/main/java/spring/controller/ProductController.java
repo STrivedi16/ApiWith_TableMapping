@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import ListInterface.ProductInterface;
 import spring.RequestMessage.ErrorMessage;
 import spring.RequestMessage.SuccessMessage;
 import spring.RequestMessage.SuccessMessagePage;
@@ -95,6 +96,55 @@ public class ProductController {
 
 			return new ResponseEntity<>(new SuccessMessage("SuccessFull Discontinue", "Success", product),
 					HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<>(new ErrorMessage("Error ", "Not Found"), HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@GetMapping("/searchproduct")
+	public ResponseEntity<?> Insearch(
+			@RequestParam(value = "search", defaultValue = "-", required = false) String product) {
+
+		try {
+
+			System.out.println(product);
+			Product product2 = this.prodtservice.getSearch(product);
+
+			return new ResponseEntity<>(new SuccessMessage("Success", "Success", product2), HttpStatus.OK);
+		} catch (Exception e) {
+
+			return new ResponseEntity<>(new ErrorMessage("Error ", "Not Found "), HttpStatus.NOT_FOUND);
+		}
+
+	}
+
+	@GetMapping("/contain")
+	public ResponseEntity<?> Contain(
+			@RequestParam(value = "getsearch", defaultValue = "-", required = false) String product) {
+		try {
+			System.out.println(product);
+
+			List<ProductInterface> list = this.prodtservice.getProductContaining(product);
+
+			return new ResponseEntity<>(new SuccessMessage("Success", "Success", list), HttpStatus.OK);
+
+		} catch (Exception e) {
+
+			return new ResponseEntity<>(new ErrorMessage("Error", "Not Found"), HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@GetMapping("/Unique")
+	public ResponseEntity<?> Uniqueserch(
+
+			@RequestParam(value = "product", defaultValue = "", required = false) String product,
+			@RequestParam(value = "price", defaultValue = "", required = false) Integer price,
+			@RequestParam(value = "company", defaultValue = "", required = false) String company) {
+		try {
+			List<ProductInterface> list2 = this.prodtservice.getunique(product, price, company);
+
+			return new ResponseEntity<>(new SuccessMessage("Success", "Success", list2), HttpStatus.OK);
 		} catch (Exception e) {
 
 			return new ResponseEntity<>(new ErrorMessage("Error ", "Not Found"), HttpStatus.NOT_FOUND);

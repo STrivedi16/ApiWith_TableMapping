@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import ListInterface.ProductInterface;
 import spring.RequestMessage.SuccessMessage;
 import spring.entity.Product;
 import spring.repository.ProductRepository;
@@ -74,6 +75,29 @@ public class prodtservice {
 
 		return "Product is Discontinue";
 
+	}
+
+	public Product getSearch(String product) {
+		Product product2 = this.productRepository.findByItemIgnoreCase(product);
+
+		return product2;
+	}
+
+	public List<ProductInterface> getProductContaining(String product) {
+		List<ProductInterface> list = this.productRepository.findByItemIgnoreCaseContaining(product,
+				ProductInterface.class);
+		;
+
+		return list;
+	}
+
+	public List<ProductInterface> getunique(String product, Integer price, String company) {
+
+		List<ProductInterface> list = this.productRepository
+				.findByItemContainingIgnoreCaseAndPriceLessThanEqualAndCompanyContainingIgnoreCase(product, price,
+						company);
+
+		return list;
 	}
 
 }

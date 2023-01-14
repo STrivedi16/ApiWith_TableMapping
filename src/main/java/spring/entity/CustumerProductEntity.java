@@ -21,9 +21,11 @@ public class CustumerProductEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnore
 	private Customer customer_id;
-
-	@ManyToOne(fetch = FetchType.LAZY)
+	// Eagaer loading data loading oocurs on the spot
+	@ManyToOne(fetch = FetchType.LAZY) // Lazy Loading data load when we call explicitly call getter method.
 	@JsonIgnore
+
+	// jsonignore is used to ignore the logical propertity
 	private Product item_productid;
 
 	public Customer getCustomer_id() {

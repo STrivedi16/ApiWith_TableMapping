@@ -24,6 +24,10 @@ public class Product {
 
 	private String item;
 
+	private int price;
+
+	private String company;
+
 	private Boolean active = true;
 
 //	public int cstm() {
@@ -38,12 +42,31 @@ public class Product {
 	@JsonIgnore
 	private List<CustumerProductEntity> productentity;
 
-	public Product(int productid, String item, Boolean active, List<CustumerProductEntity> productentity) {
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public Product(int productid, String item, int price, String company, Boolean active,
+			List<CustumerProductEntity> productentity) {
 		super();
 		this.productid = productid;
 		this.item = item;
+		this.price = price;
+		this.company = company;
 		this.active = active;
 		this.productentity = productentity;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
 	}
 
 	public List<CustumerProductEntity> getProductentity() {
