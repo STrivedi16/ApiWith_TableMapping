@@ -20,7 +20,7 @@ import spring.service.NotFoundException;
 import spring.service.customer_entity_itemService;
 
 @RestController
-@RequestMapping(value = "api")
+@RequestMapping()
 public class CustomerProductController {
 
 	@Autowired
@@ -37,7 +37,8 @@ public class CustomerProductController {
 
 			System.err.println("ahhksnksnsnf");
 
-			return new ResponseEntity<>(new SuccessMessage("Successfull", "SuccessFull", cstm), HttpStatus.OK);
+			return new ResponseEntity<>(new SuccessMessage("Successfull", "SuccessFull",
+					(cstm.getCustomer_id() + " " + cstm.getItem_productid())), HttpStatus.OK);
 
 		} catch (Exception e) {
 			System.err.println("abcd");

@@ -3,7 +3,6 @@ package spring.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,20 +22,20 @@ import spring.entity.Product;
 import spring.service.NotFoundException;
 import spring.service.prodtservice;
 
-@RequestMapping(value = "api")
+@RequestMapping("/product")
 @RestController
 public class ProductController {
 
 	@Autowired
 	private prodtservice prodtservice;
 
-	@PostMapping("/product")
+	@PostMapping()
 	public ResponseEntity<?> addproduct(@RequestBody Product product) {
 
 		return this.prodtservice.addproduct(product);
 	}
 
-	@GetMapping("/products")
+	@GetMapping("/All")
 	public ResponseEntity<?> getAllproduct() {
 		List<Product> list = this.prodtservice.getproduct();
 		try {
@@ -54,13 +53,16 @@ public class ProductController {
 
 	@GetMapping("/page")
 	public ResponseEntity<?> getinpage(
-			@RequestParam(name = "pagenumber", defaultValue = "1", required = false) Integer pagenumber,
-			@RequestParam(name = "pagesize", defaultValue = "5", required = false) Integer pagesize) {
+			@RequestParam(name = "pagenumber", defaultValue = "1", required = true) Integer pagenumber,
+			@RequestParam(name = "pagesize", defaultValue = "5", required = true) Integer pagesize) {
 		try {
-			Page<Product> list2 = this.prodtservice.getInpage(pagenumber, pagesize);
 
-			return new ResponseEntity<>(new SuccessMessagePage("Successfully GET", "Successfull", list2.getContent(),
-					pagenumber, pagesize, list2.getTotalPages()), HttpStatus.OK);
+			System.out.println(pagenumber + " " + pagesize);
+
+			List<Product> list2 = this.prodtservice.getInpage(pagenumber, pagesize);
+
+			return new ResponseEntity<>(new SuccessMessagePage("Successfully GET", "Successfull", list2, pagenumber,
+					pagesize, list2.size()), HttpStatus.OK);
 
 		} catch (Exception e) {
 

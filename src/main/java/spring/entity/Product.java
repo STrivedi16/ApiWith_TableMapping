@@ -1,5 +1,6 @@
 package spring.entity;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,7 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -28,7 +31,13 @@ public class Product {
 
 	private String company;
 
-	private Boolean active = true;
+	private Boolean is_active = true;
+
+	@CreationTimestamp
+	private Timestamp creationTimestamp;
+
+	@UpdateTimestamp
+	private Timestamp updationTimestamp;
 
 //	public int cstm() {
 //
@@ -50,15 +59,41 @@ public class Product {
 		this.price = price;
 	}
 
-	public Product(int productid, String item, int price, String company, Boolean active,
-			List<CustumerProductEntity> productentity) {
+	public Product(int productid, String item, int price, String company, Boolean is_active,
+			Timestamp creationTimestamp, Timestamp updationTimestamp, List<CustumerProductEntity> productentity) {
 		super();
 		this.productid = productid;
 		this.item = item;
 		this.price = price;
 		this.company = company;
-		this.active = active;
+		this.is_active = is_active;
+		this.creationTimestamp = creationTimestamp;
+		this.updationTimestamp = updationTimestamp;
 		this.productentity = productentity;
+	}
+
+	public Boolean getIs_active() {
+		return is_active;
+	}
+
+	public void setIs_active(Boolean is_active) {
+		this.is_active = is_active;
+	}
+
+	public Timestamp getCreationTimestamp() {
+		return creationTimestamp;
+	}
+
+	public void setCreationTimestamp(Timestamp creationTimestamp) {
+		this.creationTimestamp = creationTimestamp;
+	}
+
+	public Timestamp getUpdationTimestamp() {
+		return updationTimestamp;
+	}
+
+	public void setUpdationTimestamp(Timestamp updationTimestamp) {
+		this.updationTimestamp = updationTimestamp;
 	}
 
 	public String getCompany() {
@@ -81,16 +116,16 @@ public class Product {
 		super();
 		this.productid = productid;
 		this.item = item;
-		this.active = active;
+		this.is_active = active;
 //		this.customer = customer;
 	}
 
 	public Boolean getActive() {
-		return active;
+		return is_active;
 	}
 
 	public void setActive(Boolean active) {
-		this.active = active;
+		this.is_active = active;
 	}
 
 	public int getProductid() {

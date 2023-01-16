@@ -23,14 +23,14 @@ import spring.entity.Customer;
 import spring.service.Cstmservice;
 import spring.service.NotFoundException;
 
-@RequestMapping(value = "api")
+@RequestMapping("/customer")
 @RestController
 public class CustomerController {
 
 	@Autowired
 	private Cstmservice cstmservice;
 
-	@PostMapping("/customer")
+	@PostMapping()
 	public ResponseEntity<?> addcustomer(@RequestBody Customer customer) {
 		return this.cstmservice.setdata(customer);
 	}
@@ -67,7 +67,7 @@ public class CustomerController {
 
 	}
 
-	@PutMapping("/customer/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@RequestBody Customer customer, @PathVariable("id") int id)
 			throws NotFoundException {
 		Customer cstm = this.cstmservice.update(customer);
@@ -82,7 +82,7 @@ public class CustomerController {
 		}
 	}
 
-	@DeleteMapping("/customers/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable() int id) {
 		String string = this.cstmservice.delete(id);
 
@@ -95,7 +95,7 @@ public class CustomerController {
 		}
 	}
 
-	@GetMapping("/Findby/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<?> getByid(@PathVariable("id") int id) {
 
 		try {
@@ -109,37 +109,7 @@ public class CustomerController {
 
 	}
 
-	@PostMapping("/item/{id}")
-	public ResponseEntity<?> ProductStore(@RequestBody Customer customer, @PathVariable("id") int id) {
-		Customer customer2 = this.cstmservice.Product(customer);
-		try {
-			if (customer.getId() == id) {
-				return new ResponseEntity<>(new SuccessMessage("SuccessFull ", "Successfull", customer2),
-						HttpStatus.OK);
-			}
-			throw new NotFoundException("Data Not Found");
-		} catch (NotFoundException e) {
-			return new ResponseEntity<>(new ErrorMessage(e.getMessage(), "Not GET"), HttpStatus.NOT_FOUND);
-		}
-	}
-
-	@PutMapping("/buy/{id}")
-	public ResponseEntity<?> setproductCustomer(@RequestBody Customer customer, @PathVariable("id") int id) {
-		Customer customer2 = this.cstmservice.setprodctCustomer(customer);
-		try {
-			if (customer.getId() == id) {
-				return new ResponseEntity<>(new SuccessMessage("SuccessFull ", "Successfull", customer2),
-						HttpStatus.OK);
-			}
-			throw new NotFoundException("Data Not Found");
-
-		} catch (NotFoundException e) {
-			return new ResponseEntity<>(new ErrorMessage(e.getMessage(), "Not GET"), HttpStatus.NOT_FOUND);
-
-		}
-	}
-
-	@GetMapping("/inpagecstm")
+	@GetMapping("/customers")
 	public ResponseEntity<?> getcustomerinpage(
 			@RequestParam(value = "pagenumber", defaultValue = "1", required = false) Integer pagenumber,
 			@RequestParam(value = "pagesize", defaultValue = "5", required = false) Integer pagesize) {

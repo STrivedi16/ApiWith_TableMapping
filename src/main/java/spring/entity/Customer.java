@@ -1,5 +1,6 @@
 package spring.entity;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,7 +13,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -41,8 +44,14 @@ public class Customer {
 	@JsonIgnore
 	private List<CustumerProductEntity> item;
 
+	@CreationTimestamp
+	private Timestamp creationtime;
+
+	@UpdateTimestamp
+	private Timestamp updationtime;
+
 	public Customer(int id, String name, String city, long number, Detail address, List<CustumerProductEntity> item,
-			Boolean is_active) {
+			Timestamp creationtime, Timestamp updationtime, Boolean is_active) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -50,7 +59,25 @@ public class Customer {
 		this.number = number;
 		this.address = address;
 		this.item = item;
+		this.creationtime = creationtime;
+		this.updationtime = updationtime;
 		this.is_active = is_active;
+	}
+
+	public Timestamp getCreationtime() {
+		return creationtime;
+	}
+
+	public void setCreationtime(Timestamp creationtime) {
+		this.creationtime = creationtime;
+	}
+
+	public Timestamp getUpdationtime() {
+		return updationtime;
+	}
+
+	public void setUpdationtime(Timestamp updationtime) {
+		this.updationtime = updationtime;
 	}
 
 	public List<CustumerProductEntity> getItem() {

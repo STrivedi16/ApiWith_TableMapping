@@ -46,14 +46,21 @@ public class prodtservice {
 //
 //	}
 
-	public Page<Product> getInpage(Integer pagenumber, Integer pagesize) {
-		Pageable pageable = PageRequest.of(pagenumber, pagesize);
+	public List<Product> getInpage(Integer pagenumber, Integer pagesize) {
 
-		Page<Product> page = this.productRepository.findAll(pageable);
+		if (pagenumber == null && pagesize == null) {
 
-		// List<Product> list = page.getContent();
+			return this.productRepository.findAll();
 
-		return page;
+		} else {
+			Pageable pageable = PageRequest.of(pagenumber, pagesize);
+
+			Page<Product> page = this.productRepository.findAll(pageable);
+
+			List<Product> list = page.getContent();
+
+			return list;
+		}
 	}
 
 	public Product getInsearch(String product) {

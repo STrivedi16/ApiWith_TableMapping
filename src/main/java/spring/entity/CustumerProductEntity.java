@@ -1,5 +1,7 @@
 package spring.entity;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,6 +31,9 @@ public class CustumerProductEntity {
 
 	// jsonignore is used to ignore the logical propertity
 	private Product item_productid;
+
+	@CreationTimestamp
+	private Timestamp creatiotime;
 
 	public Customer getCustomer_id() {
 		return customer_id;
