@@ -53,8 +53,8 @@ public class ProductController {
 
 	@GetMapping("/page")
 	public ResponseEntity<?> getinpage(
-			@RequestParam(name = "pagenumber", defaultValue = "1", required = true) Integer pagenumber,
-			@RequestParam(name = "pagesize", defaultValue = "5", required = true) Integer pagesize) {
+			@RequestParam(name = "pagenumber", /* defaultValue = "1" */ required = false) Integer pagenumber,
+			@RequestParam(name = "pagesize" /* defaultValue = "5" */, required = false) Integer pagesize) {
 		try {
 
 			System.out.println(pagenumber + " " + pagesize);

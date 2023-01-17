@@ -30,7 +30,7 @@ public class CustomerController {
 	@Autowired
 	private Cstmservice cstmservice;
 
-	@PostMapping()
+	@PostMapping("/register")
 	public ResponseEntity<?> addcustomer(@RequestBody Customer customer) {
 		return this.cstmservice.setdata(customer);
 	}

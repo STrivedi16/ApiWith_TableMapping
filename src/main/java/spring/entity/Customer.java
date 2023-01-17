@@ -50,6 +50,8 @@ public class Customer {
 	@UpdateTimestamp
 	private Timestamp updationtime;
 
+	// private PasswordEncoder passwordEncoder;
+
 	public Customer(int id, String name, String city, long number, Detail address, List<CustumerProductEntity> item,
 			Timestamp creationtime, Timestamp updationtime, Boolean is_active) {
 		super();
