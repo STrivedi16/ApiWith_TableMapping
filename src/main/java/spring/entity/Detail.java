@@ -11,8 +11,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
 @Entity
-@SQLDelete(sql = "UPDATE detail set active=false where did=?")
-@Where(clause = "active=true")
+@SQLDelete(sql = "UPDATE customer_entity set is_active=false WHERE id=?")
+@Where(clause = "is_active=true")
 public class Detail {
 
 	@Id
@@ -45,14 +45,6 @@ public class Detail {
 		this.is_active = is_active;
 		this.creationtime = creationtime;
 		this.updationtime = updationtime;
-	}
-
-	public boolean isIs_active() {
-		return is_active;
-	}
-
-	public void setIs_active(boolean is_active) {
-		this.is_active = is_active;
 	}
 
 	public java.sql.Timestamp getCreationtime() {

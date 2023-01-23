@@ -14,11 +14,13 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@SQLDelete(sql = "UPDATE product set active=")
+@SQLDelete(sql = "UPDATE customer_entity set is_active=false WHERE id=?")
+@Where(clause = "is_active=true")
 public class Product {
 
 	@Id
@@ -155,6 +157,13 @@ public class Product {
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String toString() {
+		return "Product [productid=" + productid + ", item=" + item + ", price=" + price + ", company=" + company
+				+ ", is_active=" + is_active + ", creationTimestamp=" + creationTimestamp + ", updationTimestamp="
+				+ updationTimestamp + ", productentity=" + productentity + "]";
 	}
 
 }

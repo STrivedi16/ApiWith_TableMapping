@@ -1,6 +1,7 @@
 package spring.entity;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,6 +18,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "customerEntity")
 @SQLDelete(sql = "UPDATE customer_entity set is_active=false WHERE id=?")
 @Where(clause = "is_active=true")
-public class Customer {
+public class Customer implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,6 +45,7 @@ public class Customer {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customer_id", fetch = FetchType.LAZY)
 	@JsonIgnore
+
 	private List<CustumerProductEntity> item;
 
 	@CreationTimestamp
@@ -50,10 +54,14 @@ public class Customer {
 	@UpdateTimestamp
 	private Timestamp updationtime;
 
-	// private PasswordEncoder passwordEncoder;
+	private String email;
+
+	private String password;
+
+	private Boolean is_active = true;
 
 	public Customer(int id, String name, String city, long number, Detail address, List<CustumerProductEntity> item,
-			Timestamp creationtime, Timestamp updationtime, Boolean is_active) {
+			Timestamp creationtime, Timestamp updationtime, String email, String password, Boolean is_active) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -63,7 +71,25 @@ public class Customer {
 		this.item = item;
 		this.creationtime = creationtime;
 		this.updationtime = updationtime;
+		this.email = email;
+		this.password = password;
 		this.is_active = is_active;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Timestamp getCreationtime() {
@@ -89,8 +115,6 @@ public class Customer {
 	public void setItem(List<CustumerProductEntity> item) {
 		this.item = item;
 	}
-
-	private Boolean is_active = true;
 
 	public int getId() {
 		return id;
@@ -151,6 +175,42 @@ public class Customer {
 	public Customer() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 }
