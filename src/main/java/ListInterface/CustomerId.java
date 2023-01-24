@@ -11,4 +11,8 @@ public interface CustomerId {
 	public long getNumber();
 
 	public Detailinterface getAddress();
+
+//	public String getPassword();
+
+	public String getEmail();
 }

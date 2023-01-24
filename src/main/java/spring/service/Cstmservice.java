@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,9 @@ import spring.repository.DetailRepository;
 public class Cstmservice {
 
 	@Autowired
+	private PasswordEncoder encoder;
+
+	@Autowired
 	private CustomerRepository customerRepository;
 
 	@Autowired
@@ -33,7 +37,7 @@ public class Cstmservice {
 	List<Customer> list = new ArrayList<>();
 
 	public ResponseEntity<?> setdata(Customer customer) {
-
+		customer.setPassword(encoder.encode(customer.getPassword()));
 		return new ResponseEntity<>(new SuccessMessage("stored", "Successfull", customerRepository.save(customer)),
 				HttpStatus.OK);
 	}
